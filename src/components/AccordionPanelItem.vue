@@ -1,80 +1,94 @@
 <script setup>
-import { ref } from 'vue'
-const props = defineProps(['faq'])
-const isNote = props.faq.note
-const isActive = ref(false)
+import "@/assets/base.css";
+import { ref } from "vue";
+const props = defineProps(["faq"]);
+const isNote = props.faq.note;
+const isActive = ref(false);
 const toggleClass = () => {
-  isActive.value = !isActive.value
-}
+	isActive.value = !isActive.value;
+};
 </script>
 
 <template>
-  <div class="accordion">
-    <div class="accordion-title" :data-active="isActive" @click="toggleClass">
-      <span>Q</span>{{ faq.q }}
-    </div>
-    <div class="accordion-body" :data-active="isActive">
-      <div class="accordion-inner">
-        <p>
-          <span>A</span>{{ faq.a }}<br />
-          <span v-if="isNote" class="faq-item__note">{{ faq.note }}</span>
-        </p>
-      </div>
-    </div>
-  </div>
+	<div class="accordion">
+		<div class="accordion__title" :data-active="isActive" @click="toggleClass">
+			<span class="accordion__icon">Q</span>{{ faq.q }}
+		</div>
+		<div class="accordion__body" :data-active="isActive">
+			<div class="accordion__inner">
+				<span class="accordion__icon accordion__icon--a">A</span>
+				<p>
+					<span>{{ faq.a }}</span>
+					<br /><span v-if="isNote" class="accordion__note">{{
+						faq.note
+					}}</span>
+				</p>
+			</div>
+		</div>
+	</div>
 </template>
 
 <style scoped>
 .accordion {
-  margin-bottom: 1rem;
-  border: 1px solid limegreen;
-  cursor: pointer;
+	width: min(90vw, 750px);
+	margin: 0 auto 1rem;
+	border: 1px solid var(--vt-c-orange);
+	color: var(--color-text);
+	cursor: pointer;
 }
-.accordion-title {
-  position: relative;
-  padding: 1rem;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: limegreen;
+.accordion__title {
+	position: relative;
+	padding: 1rem;
+	font-weight: 700;
+	font-size: 1rem;
+	color: var(--vt-c-white);
+	cursor: pointer;
+	background-color: var(--vt-c-orange);
 }
-.accordion-title:after,
-.accordion-title:before {
-  background-color: #000;
-  bottom: 0;
-  content: '';
-  display: block;
-  height: 2px;
-  margin: auto 0;
-  position: absolute;
-  right: 8px;
-  top: 0;
-  width: 16px;
+.accordion__title:after,
+.accordion__title:before {
+	background-color: var(--vt-c-white);
+	bottom: 0;
+	content: "";
+	display: block;
+	height: 2px;
+	margin: auto 0;
+	position: absolute;
+	right: 1rem;
+	top: 0;
+	width: 1rem;
 }
-.accordion-title:after {
-  transform: rotate(270deg);
-  transition: transform 0.2s;
+.accordion__title:after {
+	transform: rotate(270deg);
+	transition: transform 0.2s;
 }
-.accordion-title[data-active='true']:after {
-  transform: rotate(180deg);
+.accordion__title[data-active="true"]:after {
+	transform: rotate(180deg);
 }
-.accordion-title span:first-child {
-  font-size: 120%;
-  padding-right: 8px;
+.accordion__icon {
+	font-size: 120%;
+	font-weight: bold;
+	padding-right: 8px;
 }
-.accordion-body {
-  padding-inline: 1rem;
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.2s ease;
+.accordion__icon--a {
+	color: var(--vt-c-orange);
 }
-.accordion-body[data-active='true'] {
-  grid-template-rows: 1fr;
+.accordion__body {
+	padding-inline: 1rem;
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.2s ease;
+	background-color: var(--vt-c-white);
 }
-.accordion-inner {
-  overflow: hidden;
+.accordion__body[data-active="true"] {
+	padding: 1rem;
+	grid-template-rows: 1fr;
 }
-.faq-item__note {
-  font-size: 80%;
+.accordion__inner {
+	overflow: hidden;
+	display: flex;
+}
+.accordion__note {
+	font-size: 85%;
 }
 </style>
