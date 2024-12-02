@@ -1,26 +1,44 @@
 <script setup>
 import { ref } from "vue";
-const props = defineProps(["faq"]);
-const isNote = props.faq.note;
+const { question, answer, note } = defineProps({
+	question: {
+		type: String,
+		Required: true,
+		default: "",
+	},
+	answer: {
+		type: String,
+		Required: true,
+		default: "",
+	},
+	note: {
+		type: String,
+		Required: false,
+		default: "",
+	},
+});
+const isNote = note;
 const isActive = ref(false);
-const toggleClass = () => {
+const toggleAccordion = () => {
 	isActive.value = !isActive.value;
 };
 </script>
 
 <template>
 	<div class="accordion">
-		<div class="accordion__title" :data-active="isActive" @click="toggleClass">
-			<span class="accordion__icon">Q</span>{{ faq.q }}
+		<div
+			class="accordion__title"
+			:data-active="isActive"
+			@click="toggleAccordion"
+		>
+			<span class="accordion__icon">Q</span>{{ question }}
 		</div>
 		<div class="accordion__body" :data-active="isActive">
 			<div class="accordion__inner">
 				<span class="accordion__icon accordion__icon--a">A</span>
 				<p>
-					<span>{{ faq.a }}</span>
-					<br /><span v-if="isNote" class="accordion__note">{{
-						faq.note
-					}}</span>
+					<span>{{ answer }}</span>
+					<br /><span v-if="isNote" class="accordion__note">{{ note }}</span>
 				</p>
 			</div>
 		</div>
@@ -29,7 +47,7 @@ const toggleClass = () => {
 
 <style scoped>
 .accordion {
-	width: min(90vw, 750px);
+	width: min(100%, 750px);
 	margin: 0 auto 1rem;
 	border: 1px solid var(--vt-c-orange);
 	color: var(--color-text);
