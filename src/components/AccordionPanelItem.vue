@@ -1,5 +1,4 @@
 <script setup>
-import "@/assets/base.css";
 import { ref } from "vue";
 const props = defineProps(["faq"]);
 const isNote = props.faq.note;
